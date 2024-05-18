@@ -1,13 +1,11 @@
-FROM ubuntu:22.04
+FROM nginx:latest
 
-RUN apt update
-RUN apt install -y nginx
+RUN rm -rf /usr/share/nginx/html/*
 
 COPY html /usr/share/nginx/html
-RUN echo service nginx start && bash>>build-en-start-op-poort-81.bat
-RUN echo date> Buildtime.txt
-RUN echo service nginx stop>>stop-en-remove-container.bat 
+
+RUN date > /usr/share/nginx/html/buildtime.txt
 
 EXPOSE 81
-RUN -d -p 81:80
 
+CMD ["nginx", "-g", "daemon off;"]
